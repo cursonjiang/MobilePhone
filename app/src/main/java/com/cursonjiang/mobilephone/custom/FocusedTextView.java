@@ -30,4 +30,5 @@ public class FocusedTextView extends TextView {
     public boolean isFocused() {
         return true;
     }
+
 }

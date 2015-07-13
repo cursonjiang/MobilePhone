@@ -31,4 +31,5 @@ public class BlackNumberInfo {
                 ", number='" + number + '\'' +
                 '}';
     }
+
 }

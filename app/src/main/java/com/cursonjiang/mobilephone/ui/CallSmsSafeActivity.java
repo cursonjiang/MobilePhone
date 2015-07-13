@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +24,8 @@ import com.cursonjiang.mobilephone.App;
 import com.cursonjiang.mobilephone.R;
 import com.cursonjiang.mobilephone.bean.BlackNumberInfo;
 import com.cursonjiang.mobilephone.db.BlackNumberDao;
+import com.cursonjiang.mobilephone.utils.ToastUtils;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -84,16 +85,16 @@ public class CallSmsSafeActivity extends BaseActivity {
                                 tv_state.setVisibility(View.INVISIBLE);
                                 //获取最后一个可见条目在集合里面的位置
                                 int lastVisiblePosition = mListView.getLastVisiblePosition();
-                                Log.d("最后一个条目的位置", lastVisiblePosition + "");
+                                Logger.d("最后一个条目的位置", lastVisiblePosition + "");
 
                                 //假设集合里面有20个item 位置从0开始的最后一个条目的位置是19
                                 if (lastVisiblePosition == (mInfoList.size() - 1)) {
-                                    Log.d(TAG, "列表被移动到了最后一个位置,要加载更多的数据");
+                                    Logger.d(TAG, "列表被移动到了最后一个位置,要加载更多的数据");
                                     fillData();
                                 }
                                 startIndex += maxnumber;
                                 if (startIndex >= totalNumber) {
-                                    Toast.makeText(CallSmsSafeActivity.this, "没有更多数据了~", Toast.LENGTH_SHORT).show();
+                                    ToastUtils.showToast(CallSmsSafeActivity.this, "没有更多数据了~", Toast.LENGTH_SHORT);
                                     return;
                                 }
                                 break;
@@ -249,7 +250,7 @@ public class CallSmsSafeActivity extends BaseActivity {
                     public void onClick(View v) {
                         String blackNumber = et_blackNumber.getText().toString().trim();
                         if (TextUtils.isEmpty(blackNumber)) {
-                            Toast.makeText(CallSmsSafeActivity.this, "号码不能为空~", Toast.LENGTH_SHORT).show();
+                            ToastUtils.showToast(CallSmsSafeActivity.this, "号码不能为空~", Toast.LENGTH_SHORT);
                             return;
                         }
                         String mode;
@@ -264,7 +265,7 @@ public class CallSmsSafeActivity extends BaseActivity {
                             mode = "3";
                         } else {
                             //没有选中
-                            Toast.makeText(CallSmsSafeActivity.this, "请选择拦截模式~", Toast.LENGTH_SHORT).show();
+                            ToastUtils.showToast(CallSmsSafeActivity.this, "请选择拦截模式~", Toast.LENGTH_SHORT);
                             return;
                         }
                         //添加到数据库

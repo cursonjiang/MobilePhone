@@ -69,4 +69,5 @@ public class SettingItemView extends RelativeLayout {
     public void setDesc(String text) {
         tv_desc.setText(text);
     }
+
 }

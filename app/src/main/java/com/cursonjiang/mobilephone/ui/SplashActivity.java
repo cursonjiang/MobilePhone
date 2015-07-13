@@ -1,6 +1,5 @@
 package com.cursonjiang.mobilephone.ui;
 
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -40,7 +39,7 @@ public class SplashActivity extends BaseActivity {
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1.0f);
         alphaAnimation.setDuration(500);
         findViewById(R.id.rl_root_splash).startAnimation(alphaAnimation);
-        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+        intentActivity(HomeActivity.class);
         finish();
     }
 

@@ -157,4 +157,5 @@ public class BlackNumberDao {
         db.delete("blacknumber", "number=?", new String[]{number});
         db.close();
     }
+
 }

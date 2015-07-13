@@ -62,4 +62,15 @@ public class SettingActivity extends BaseActivity {
     public void initView() {
         siv_update = (SettingItemView) findViewById(R.id.siv_update);
     }
+
+    @Override
+    public void next(View view) {
+
+    }
+
+    @Override
+    public void pre(View view) {
+
+    }
+
 }

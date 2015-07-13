@@ -21,6 +21,12 @@
         <activity android:name=".ui.HomeActivity"/>
         <activity android:name=".ui.CallSmsSafeActivity"/>
         <activity android:name=".ui.SettingActivity"/>
+        <activity android:name=".ui.LostFindActivity"/>
+        <activity android:name=".ui.setup.Setup1Activity"/>
+        <activity android:name=".ui.setup.Setup2Activity"/>
+        <activity android:name=".ui.setup.Setup3Activity"/>
+        <activity android:name=".ui.setup.Setup4Activity"/>
+
     </application>
 
 </manifest>

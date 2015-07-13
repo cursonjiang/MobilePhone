@@ -2,7 +2,6 @@ package com.cursonjiang.mobilephone.ui;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cursonjiang.mobilephone.R;
+import com.cursonjiang.mobilephone.utils.ToastUtils;
+import com.orhanobut.logger.Logger;
 
 /**
  * 主页面
@@ -29,6 +30,8 @@ import com.cursonjiang.mobilephone.R;
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "HomeActivity";
+
+    private MyAdapter mAdapter;
 
     private AlertDialog mAlertDialog;
 
@@ -79,7 +82,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         list_home = (GridView) findViewById(R.id.list_home);
-        list_home.setAdapter(new MyAdapter());
+        mAdapter = new MyAdapter();
+        list_home.setAdapter(mAdapter);
         list_home.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -91,11 +95,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                                 break;
                             case 1:
                                 //加载黑名单拦截界面
-                                startActivity(new Intent(HomeActivity.this, CallSmsSafeActivity.class));
+                                intentActivity(CallSmsSafeActivity.class);
                                 break;
                             case 8:
                                 //设置中心
-                                startActivity(new Intent(HomeActivity.this, SettingActivity.class));
+                                intentActivity(SettingActivity.class);
                                 break;
                         }
                     }
@@ -152,13 +156,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                         String pwd = et_setup_pwd.getText().toString().trim();
                         String password = mSharedPreferences.getString("password", "");
                         if (TextUtils.isEmpty(pwd)) {
-                            Toast.makeText(HomeActivity.this, "密码不能为空~", Toast.LENGTH_SHORT).show();
+                            ToastUtils.showToast(HomeActivity.this, "密码不能为空~", Toast.LENGTH_SHORT);
                         }
                         if (pwd.equals(password)) {
                             mAlertDialog.dismiss();
-                            Log.d(TAG, "进入主页面");
+                            intentActivity(LostFindActivity.class);
+                            Logger.d(TAG, "进入主页面");
                         } else {
-                            Toast.makeText(HomeActivity.this, "密码错误~", Toast.LENGTH_SHORT).show();
+                            ToastUtils.showToast(HomeActivity.this, "密码错误~", Toast.LENGTH_SHORT);
                             et_setup_pwd.setText("");
                         }
                     }
@@ -203,15 +208,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 String pwd_confirm = et_setup_pwd_confirm.getText().toString().trim();
                 //判断两个是否为空
                 if (TextUtils.isEmpty(pwd) || TextUtils.isEmpty(pwd_confirm)) {
-                    Toast.makeText(HomeActivity.this, "密码不能为空~", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast(HomeActivity.this, "密码不能为空~", Toast.LENGTH_SHORT);
                 }
                 if (pwd.equals(pwd_confirm)) {
                     mSharedPreferences.edit().putString("password", pwd).apply();
                     mAlertDialog.dismiss();
+                    ToastUtils.showToast(HomeActivity.this, "设置成功~", Toast.LENGTH_SHORT);
                     Log.d(TAG, "密码一致");
                 } else {
-                    Toast.makeText(HomeActivity.this, "密码不一致~", Toast.LENGTH_SHORT).show();
-
+                    ToastUtils.showToast(HomeActivity.this, "密码不一致~", Toast.LENGTH_SHORT);
                 }
 
         }
@@ -265,7 +270,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 1500) {
-                Toast.makeText(HomeActivity.this, "再点一次退出程序", Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(HomeActivity.this, "再点一次退出程序~", Toast.LENGTH_SHORT);
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
